@@ -1,0 +1,33 @@
+// Copyright 2022 Emmanuel Arias Soto
+// Use of this source code is governed by a MIT license that can be
+// found in the LICENSE file.
+#ifndef PATHS_H
+#define PATHS_H
+
+#define DAY_1_INPUT "@PROJECT_SOURCE_DIR@/inputs/day1.txt"
+#define DAY_2_INPUT "@PROJECT_SOURCE_DIR@/inputs/day2.txt"
+#define DAY_3_INPUT "@PROJECT_SOURCE_DIR@/inputs/day3.txt"
+#define DAY_4_INPUT "@PROJECT_SOURCE_DIR@/inputs/day4.txt"
+#define DAY_5_INPUT "@PROJECT_SOURCE_DIR@/inputs/day5.txt"
+#define DAY_6_INPUT "@PROJECT_SOURCE_DIR@/inputs/day6.txt"
+#define DAY_7_INPUT "@PROJECT_SOURCE_DIR@/inputs/day7.txt"
+#define DAY_8_INPUT "@PROJECT_SOURCE_DIR@/inputs/day8.txt"
+#define DAY_9_INPUT "@PROJECT_SOURCE_DIR@/inputs/day9.txt"
+#define DAY_10_INPUT "@PROJECT_SOURCE_DIR@/inputs/day10.txt"
+#define DAY_11_INPUT "@PROJECT_SOURCE_DIR@/inputs/day11.txt"
+#define DAY_12_INPUT "@PROJECT_SOURCE_DIR@/inputs/day12.txt"
+#define DAY_13_INPUT "@PROJECT_SOURCE_DIR@/inputs/day13.txt"
+#define DAY_14_INPUT "@PROJECT_SOURCE_DIR@/inputs/day14.txt"
+#define DAY_15_INPUT "@PROJECT_SOURCE_DIR@/inputs/day15.txt"
+#define DAY_16_INPUT "@PROJECT_SOURCE_DIR@/inputs/day16.txt"
+#define DAY_17_INPUT "@PROJECT_SOURCE_DIR@/inputs/day17.txt"
+#define DAY_18_INPUT "@PROJECT_SOURCE_DIR@/inputs/day18.txt"
+#define DAY_19_INPUT "@PROJECT_SOURCE_DIR@/inputs/day19.txt"
+#define DAY_20_INPUT "@PROJECT_SOURCE_DIR@/inputs/day20.txt"
+#define DAY_21_INPUT "@PROJECT_SOURCE_DIR@/inputs/day21.txt"
+#define DAY_22_INPUT "@PROJECT_SOURCE_DIR@/inputs/day22.txt"
+#define DAY_23_INPUT "@PROJECT_SOURCE_DIR@/inputs/day23.txt"
+#define DAY_24_INPUT "@PROJECT_SOURCE_DIR@/inputs/day24.txt"
+#define DAY_25_INPUT "@PROJECT_SOURCE_DIR@/inputs/day25.txt"
+
+#endif  // PATHS_H

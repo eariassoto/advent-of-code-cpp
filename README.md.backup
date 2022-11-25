@@ -1,0 +1,43 @@
+# Advent of Code 2022
+
+This project contains my C++ solutions for the 2022 [Advent of Code](https://adventofcode.com/2022).
+
+## Building
+
+This project requires:
+
+* A C++17 compatible compiler.
+* CMake 3.12+.
+* fmtlib (fetched by CMake).
+
+Build as any other CMake project. I recommend https://cliutils.gitlab.io/modern-cmake/ as a good reference to work with CMake projects. Generally, this should be enough to build the project:
+
+```bash
+$> # Clone the repository
+$> # cd /path/to/repo
+$> cmake -S . -B build
+```
+
+Executables targets will be generated for each day.
+
+## Progress
+
+* :black_square_button: Day 1
+* :black_square_button: Day 2
+* :black_square_button: Day 3
+* :black_square_button: Day 4
+* :black_square_button: Day 5
+* :black_square_button: Day 6
+* :black_square_button: Day 7
+* :black_square_button: Day 8
+* :black_square_button: Day 9
+* :black_square_button: Day 10
+* :black_square_button: Day 
+* :black_square_button: Day 
+* :black_square_button: Day 
+* :black_square_button: Day 
+* :black_square_button: Day 
+* :black_square_button: Day 
+* :black_square_button: Day 
+* :black_square_button: Day 
+
