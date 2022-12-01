@@ -1,0 +1,6 @@
+---
+BasedOnStyle: Google
+IndentWidth: 4
+BreakBeforeBraces: Linux
+SortIncludes: false
+PointerAlignment: Left

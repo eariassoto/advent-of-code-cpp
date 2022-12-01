@@ -6,14 +6,39 @@
 
 #include <fmt/core.h>
 
-#include <string>
-#include <vector>
+#include <fstream>
+#include <algorithm>
 
 int main()
 {
-    std::vector<std::string> input = ReadFile(DAY_1_INPUT);
-    for (const std::string &line : input)
-        fmt::print("{}\n", line);
+    std::ifstream in(DAY_1_INPUT);
 
+    unsigned int top1_cal_sum = 0;
+    unsigned int top2_cal_sum = 0;
+    unsigned int top3_cal_sum = 0;
+    while (!in.eof()) {
+        unsigned int curr_cal_sum = 0;
+        while (!std::isspace(in.peek()) && !in.eof()) {
+            unsigned int read_calorie;
+            in >> read_calorie;
+            curr_cal_sum += read_calorie;
+            in.ignore(1);
+        }
+        if (curr_cal_sum >= top1_cal_sum) {
+            std::swap(top2_cal_sum, top3_cal_sum);
+            std::swap(top1_cal_sum, top2_cal_sum);
+            top1_cal_sum = curr_cal_sum;
+        } else if (curr_cal_sum >= top2_cal_sum) {
+            std::swap(top2_cal_sum, top3_cal_sum);
+            top2_cal_sum = curr_cal_sum;
+        } else if (curr_cal_sum >= top3_cal_sum) {
+            top3_cal_sum = curr_cal_sum;
+        }
+        in.ignore(1);
+    }
+
+    fmt::print("Highest calories count is: {}\n", top1_cal_sum);
+    fmt::print("The sum of the three highest calories counts is: {}\n",
+               (top1_cal_sum + top2_cal_sum + top3_cal_sum));
     return 0;
 }
