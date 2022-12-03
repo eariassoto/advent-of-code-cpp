@@ -6,14 +6,39 @@
 
 #include <fmt/core.h>
 
+#include <fstream>
 #include <string>
-#include <vector>
+#include <unordered_set>
 
 int main()
 {
-    std::vector<std::string> input = ReadFile(DAY_3_INPUT);
-    for (const std::string &line : input)
-        fmt::print("{}\n", line);
+    // Open the File
+    std::ifstream in(DAY_3_INPUT);
+    if (!in) {
+        fmt::print(stderr, "Cannot open file.");
+        return 0;
+    }
+
+    unsigned int priority_sum = 0;
+
+    std::unordered_set<char> items_map;
+    std::string line;
+    while (std::getline(in, line)) {
+        items_map.clear();
+        //fmt::print("{}\n", line);
+        for (int i = 0; i < line.size() / 2; ++i) {
+            items_map.insert(line[i]);
+        }
+        for (int i = line.size() / 2; i < line.size(); ++i) {
+            if (items_map.find(line[i]) != items_map.end()) {
+                //fmt::print("{}\n", line[i]);
+                priority_sum += (line[i] >= 'a') ? (line[i] - 'a' + 1)
+                                                 : (line[i] - 'A' + 27);
+                break;
+            }
+        }
+    }
+    fmt::print("The sum of priorities is: {}\n", priority_sum);
 
     return 0;
 }
