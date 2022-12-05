@@ -28,6 +28,75 @@ void DeleteNodeList(Node* n)
     }
 }
 
+void MoveCrates9000(std::istream& in,
+                    std::unordered_map<int, std::pair<Node*, Node*>>& crates)
+{
+    std::string aux;
+    while (!in.eof()) {
+        // ignore " move "
+        in >> aux;
+        unsigned int repeat = 0;
+        in >> repeat;
+
+        // ignore " from "
+        in >> aux;
+        unsigned int stack_from = 0;
+        in >> stack_from;
+
+        // ignore " to "
+        in >> aux;
+        unsigned int stack_to = 0;
+        in >> stack_to;
+
+        for (unsigned int i = 0; i < repeat; ++i) {
+            Node* crate_to_move = crates[stack_from - 1].first;
+            crates[stack_from - 1].first = crate_to_move->Next;
+
+            crate_to_move->Next = crates[stack_to - 1].first;
+            crates[stack_to - 1].first = crate_to_move;
+        }
+
+        // fmt::print("move {} from {} to {}\n", repeat, stack_from, stack_to);
+        in.ignore(1);
+    }
+}
+
+void MoveCrates9001(std::istream& in,
+                    std::unordered_map<int, std::pair<Node*, Node*>>& crates)
+{
+    std::string aux;
+    while (!in.eof()) {
+        // ignore " move "
+        in >> aux;
+        unsigned int repeat = 0;
+        in >> repeat;
+
+        // ignore " from "
+        in >> aux;
+        unsigned int stack_from = 0;
+        in >> stack_from;
+
+        // ignore " to "
+        in >> aux;
+        unsigned int stack_to = 0;
+        in >> stack_to;
+
+        Node* crate_to_move = crates[stack_from - 1].first;
+        Node* last_crate_to_move = crate_to_move;
+        for (unsigned int i = 1; i < repeat; ++i) {
+            last_crate_to_move = last_crate_to_move->Next;
+        }
+        // new head for stack from
+        crates[stack_from - 1].first = last_crate_to_move->Next;
+
+        last_crate_to_move->Next = crates[stack_to - 1].first;
+        crates[stack_to - 1].first = crate_to_move;
+
+        // fmt::print("move {} from {} to {}\n", repeat, stack_from, stack_to);
+        in.ignore(1);
+    }
+}
+
 int main()
 {
     std::ifstream in(DAY_5_INPUT);
@@ -89,34 +158,7 @@ int main()
     // Ignore first whileline
     std::getline(in, line);
 
-    std::string aux;
-    while (!in.eof()) {
-        // ignore " move "
-        in >> aux;
-        unsigned int repeat = 0;
-        in >> repeat;
-
-        // ignore " from "
-        in >> aux;
-        unsigned int stack_from = 0;
-        in >> stack_from;
-
-        // ignore " to "
-        in >> aux;
-        unsigned int stack_to = 0;
-        in >> stack_to;
-
-        for (unsigned int i = 0; i < repeat; ++i) {
-            Node* crate_to_move = crates[stack_from - 1].first;
-            crates[stack_from - 1].first = crate_to_move->Next;
-
-            crate_to_move->Next = crates[stack_to - 1].first;
-            crates[stack_to - 1].first = crate_to_move;
-        }
-
-        // fmt::print("move {} from {} to {}\n", repeat, stack_from, stack_to);
-        in.ignore(1);
-    }
+    MoveCrates9001(in, crates);
 
     // for (const auto& [k, v] : crates) {
     //     fmt::print("Stack #{}:\n", k);
