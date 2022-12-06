@@ -8,6 +8,25 @@
 #include <fstream>
 #include <unordered_set>
 #include <string>
+#include <cassert>
+
+unsigned int FindFirstUniqueSequence(const std::string& input,
+                                     unsigned int sequence_size)
+{
+    std::unordered_set<char> marker_set;
+    for (int i = 0; i < input.size() - sequence_size - 1; ++i) {
+        for (int j = 0; j < sequence_size; ++j) {
+            marker_set.emplace(input[i + j]);
+        }
+        if (marker_set.size() == sequence_size) {
+            return i + sequence_size;
+            break;
+        }
+        marker_set.clear();
+    }
+    assert(true);
+    return 0;
+}
 
 int main()
 {
@@ -17,19 +36,8 @@ int main()
     std::string input;
     std::getline(in, input);
 
-    unsigned int marker_offset = 0;
-    std::unordered_set<char> marker_set;
-    for (int i = 0; i < input.size() - 3; ++i) {
-        marker_set.emplace(input[i]);
-        marker_set.emplace(input[i + 1]);
-        marker_set.emplace(input[i + 2]);
-        marker_set.emplace(input[i + 3]);
-        if (marker_set.size() == 4) {
-            marker_offset = i + 4;
-            break;
-        }
-        marker_set.clear();
-    }
+    //unsigned int marker_offset = FindFirstUniqueSequence(input, 4);
+    unsigned int marker_offset = FindFirstUniqueSequence(input, 14);
 
     fmt::print(
         "Need to process {} new characters before the first start marker.\n",
