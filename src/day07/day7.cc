@@ -65,6 +65,12 @@ class Node
         unsigned int result = 0;
         return GetSumAux(&result);
     }
+    unsigned int FindDirSizeToDelete(unsigned int free_space)
+    {
+        unsigned int result = std::numeric_limits<unsigned int>::max();
+        FindDirSizeToDeleteAux(free_space, &result);
+        return result;
+    }
 
     static void DeleteNode(const Node* node)
     {
@@ -93,6 +99,23 @@ class Node
         }
         if (res <= 100000) *sum += res;
         // fmt::print("GetSumAux {}, sum is now: {}\n", name_, *sum);
+        // fmt::print("GetSumAux {}, res is now: {}\n", name_, res);
+        return res;
+    }
+
+    unsigned int FindDirSizeToDeleteAux(unsigned int free_space,
+                                        unsigned int* result)
+    {
+        unsigned int res = 0;
+        for (int i = 0; i < children_.size(); ++i) {
+            if (children_[i]->isFile_)
+                res += children_[i]->size_;
+            else
+                res += children_[i]->FindDirSizeToDeleteAux(free_space, result);
+        }
+        if (free_space + res >= 30000000) {
+            *result = std::min(*result, free_space + res);
+        }
         return res;
     }
 
@@ -152,7 +175,15 @@ int main()
     unsigned int sum = root->GetSumAllUnder100k();
     fmt::print("size sum of directories under 100k: {}\n", sum);
 
+    unsigned int total = root->GetTotalSum();
+    fmt::print("total sum: {}\n", total);
+
+    unsigned int free_space = 70000000 - total;
+    fmt::print("free space: {}\n", free_space);
+
     Node::DeleteNode(root);
+    unsigned int size_to_delete = root->FindDirSizeToDelete(free_space);
+    fmt::print("dir size to delete: {}\n", size_to_delete - free_space);
 
     return 0;
 }
