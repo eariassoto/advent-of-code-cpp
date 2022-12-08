@@ -121,5 +121,64 @@ int main()
     }
     fmt::print("{}\n", visible_trees.size());
 
+    int max_scenic = 0;
+    for (int h = 0; h < map_heigth; ++h) {
+        for (int w = 0; w < map_width; ++w) {
+            // fmt::print("{},{}\n", w, h);
+            if (w == 0 || h == 0 || w == (map_width - 1) ||
+                h == (map_heigth - 1)) {
+                continue;
+            }
+            int scenic = 1;
+            // left
+            int aux_l = w - 1;
+            while (true) {
+                if (aux_l == 0 || input[h][aux_l] >= input[h][w]) {
+                    fmt::print("{}\n", aux_l);
+                    scenic *= w - aux_l;
+                    break;
+                }
+                --aux_l;
+            }
+
+            // right
+            int aux_r = w + 1;
+            while (true) {
+                if (aux_r == map_width - 1 || input[h][aux_r] >= input[h][w]) {
+                    scenic *= aux_r - w;
+                    fmt::print("{}\n", aux_r);
+                    break;
+                }
+                ++aux_r;
+            }
+
+            // top
+            int aux_t = h - 1;
+            while (true) {
+                if (aux_t == 0 || input[aux_t][w] >= input[h][w]) {
+                    fmt::print("{}\n", aux_t);
+                    scenic *= h - aux_t;
+                    break;
+                }
+                --aux_t;
+            }
+
+            // bottom
+            int aux_b = h + 1;
+            while (true) {
+                if (aux_b == map_heigth - 1 || input[aux_b][w] >= input[h][w]) {
+                    scenic *= aux_b - h;
+                    fmt::print("{}\n", aux_b);
+                    break;
+                }
+                ++aux_b;
+            }
+
+            fmt::print("scenic: {}\n", scenic);
+            max_scenic = std::max(max_scenic, scenic);
+        }
+    }
+    fmt::print("max scenic: {}\n", max_scenic);
+
     return 0;
 }
