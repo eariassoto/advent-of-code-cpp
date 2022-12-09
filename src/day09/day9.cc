@@ -6,10 +6,11 @@
 
 #include <fmt/core.h>
 
+#include <array>
 #include <string>
-#include <vector>
-#include <utility>
 #include <unordered_set>
+#include <utility>
+#include <vector>
 
 struct Knot {
     int X = 0;
@@ -60,8 +61,7 @@ int main()
 {
     std::vector<std::string> input = ReadFile(DAY_9_INPUT);
 
-    Knot head;
-    Knot tail;
+    std::array<Knot, 10> knots;
     std::unordered_set<std::pair<int, int>, pair_hash> visited_places;
     visited_places.emplace(std::make_pair(0, 0));
 
@@ -70,16 +70,23 @@ int main()
 
         for (int i = 0; i < repeat; ++i) {
             // fmt::print("{} {}\n", line[0], i);
+            
+            Knot& head = knots[0];
             if (line[0] == 'R') ++head.X;
             if (line[0] == 'L') --head.X;
             if (line[0] == 'D') ++head.Y;
             if (line[0] == 'U') --head.Y;
             // fmt::print("head {},{}\n", head.X, head.Y);
             // fmt::print("tail b {},{}\n", tail.X, tail.Y);
-            if (UpdateTail(&head, &tail)) {
-                visited_places.emplace(std::make_pair(tail.X, tail.Y));
-                // fmt::print("tail visited {},{}\n", tail.X, tail.Y);
+            for (int i = 1; i < 10; ++i) {
+                const bool updated = UpdateTail(&knots[i - 1], &knots[i]);
+                if (i == 9 && updated) {
+                    visited_places.emplace(
+                        std::make_pair(knots[9].X, knots[9].Y));
+                    // fmt::print("tail visited {},{}\n", tail.X, tail.Y);
+                }
             }
+
             // fmt::print("tail a {},{}\n", tail.X, tail.Y);
         }
     }
