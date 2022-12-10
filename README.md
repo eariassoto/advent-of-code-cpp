@@ -31,7 +31,7 @@ Executable targets will be generated for each day.
 * :heavy_check_mark: Day 7 :star: :star:
 * :heavy_check_mark: Day 8 :star: :star:
 * :heavy_check_mark: Day 9 :star: :star:
-* :black_square_button: Day 10
+* :black_square_button: Day 10 :star:
 * :black_square_button: Day 11
 * :black_square_button: Day 12
 * :black_square_button: Day 14
