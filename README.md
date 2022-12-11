@@ -9,6 +9,7 @@ This project requires:
 * A C++17 compatible compiler.
 * CMake 3.12+.
 * fmtlib (fetched by CMake).
+* re2 (fetched by CMake).
 
 Build as any other CMake project. I recommend https://cliutils.gitlab.io/modern-cmake/ as a good reference to work with CMake projects. Generally, this should be enough to build the project:
 
@@ -32,7 +33,7 @@ Executable targets will be generated for each day.
 * :heavy_check_mark: Day 8 :star: :star:
 * :heavy_check_mark: Day 9 :star: :star:
 * :heavy_check_mark: Day 10 :star: :star:
-* :black_square_button: Day 11
+* :black_square_button: Day 11 :star:
 * :black_square_button: Day 12
 * :black_square_button: Day 14
 * :black_square_button: Day 15

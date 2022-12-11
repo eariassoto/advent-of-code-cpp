@@ -5,4 +5,4 @@ target_include_directories(day11 PRIVATE
     ../../include
     "${PROJECT_BINARY_DIR}/include")
 
-target_link_libraries(day11 PRIVATE fmt utils)
+target_link_libraries(day11 PRIVATE fmt utils re2)

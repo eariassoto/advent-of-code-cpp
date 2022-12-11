@@ -15,6 +15,13 @@ FetchContent_Declare(
     GIT_TAG 9.0.0)
 FetchContent_MakeAvailable(fmtlib)
 
+set(RE2_BUILD_TESTING off)
+FetchContent_Declare(
+    re2
+    GIT_REPOSITORY https://github.com/google/re2.git
+    GIT_TAG 2022-12-01)
+FetchContent_MakeAvailable(re2)
+
 configure_file (
     "${PROJECT_SOURCE_DIR}/include/paths.h.in"
     "${PROJECT_BINARY_DIR}/include/paths.h"
