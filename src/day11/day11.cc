@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 
+
 struct Monkey {
     unsigned int Id;
     std::vector<unsigned int> Items;
@@ -59,18 +60,68 @@ struct Monkey {
     }
 };
 
+struct MonkeyV2 {
+    unsigned int Id;
+    std::vector<unsigned long long int> Items;
+    char Op;
+    std::optional<unsigned long long int> OpModifier;
+    unsigned int Test;
+    unsigned int MonkeyTrue;
+    unsigned int MonkeyFalse;
+    unsigned long long int ItemsInspected = 0;
+
+    void DoTurn(unsigned long long int magic_num,
+                std::vector<MonkeyV2>& monkeys)
+    {
+        for (const unsigned long long& item : Items) {
+            ++ItemsInspected;
+            const unsigned long long int item_after_op =
+                ApplyOp(item, magic_num);
+            // const unsigned int item_bored = item_after_op / 3;
+            // fmt::print("{}\n", item_bored);
+
+            if (item_after_op % Test == 0) {
+                // fmt::print("pass true\n");
+                monkeys[MonkeyTrue].Items.push_back(item_after_op);
+            } else {
+                // fmt::print("pass false\n");
+                monkeys[MonkeyFalse].Items.push_back(item_after_op);
+            }
+        }
+        Items.clear();
+    }
+
+   private:
+    unsigned long long int ApplyOp(unsigned long long int item,
+                                   unsigned long long int magic_num)
+    {
+        if (Op == '+') {
+            unsigned long long int to_sum = item;
+            if (OpModifier.has_value()) to_sum = *OpModifier;
+            return (item + to_sum) % magic_num;
+        }
+        if (Op == '*') {
+            unsigned long long int to_multiply = item;
+            if (OpModifier.has_value()) to_multiply = *OpModifier;
+            return (item * to_multiply) % magic_num;
+        }
+        assert(true);
+        return 0;
+    }
+};
+
 int main()
 {
     std::vector<std::string> input = ReadFile(DAY_11_INPUT);
     auto input_it = input.begin();
 
     unsigned int monkey_id;
-    std::vector<Monkey> monkeys;
+    std::vector<MonkeyV2> monkeys;
 
     while (true) {
         // fmt::print("processing monkey {}\n", monkey_id);
 
-        Monkey& m = monkeys.emplace_back();
+        MonkeyV2& m = monkeys.emplace_back();
         m.Id = monkey_id;
 
         const std::string& items = *(++input_it);
@@ -91,7 +142,7 @@ int main()
         if (modifier == "old")
             m.OpModifier = std::nullopt;
         else
-            m.OpModifier = std::stoi(modifier);
+            m.OpModifier = std::stoll(modifier);
 
         re2::RE2::PartialMatch(*(++input_it), "(\\d+)", &m.Test);
         re2::RE2::PartialMatch(*(++input_it), "(\\d+)", &m.MonkeyTrue);
@@ -104,13 +155,20 @@ int main()
         ++input_it;
     }
 
-    for (int i = 0; i < 20; ++i)
-        for (auto& m : monkeys) m.DoTurn(monkeys);
+    unsigned long long int magic_num = 1;
+    for (auto& m : monkeys) magic_num *= m.Test;
+
+    for (int i = 0; i < 10000; ++i) {
+        // fmt::print("Round {}\n", i);
+        for (auto& m : monkeys) m.DoTurn(magic_num, monkeys);
+    }
 
     std::sort(monkeys.begin(), monkeys.end(),
-              [](const Monkey& a, const Monkey& b) {
+              [](const MonkeyV2& a, const MonkeyV2& b) {
                   return a.ItemsInspected > b.ItemsInspected;
               });
+    fmt::print("{} - {}\n", monkeys[0].ItemsInspected,
+               monkeys[1].ItemsInspected);
     fmt::print("{}\n", monkeys[0].ItemsInspected * monkeys[1].ItemsInspected);
 
     return 0;

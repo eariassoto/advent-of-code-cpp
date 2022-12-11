@@ -15,7 +15,7 @@ FetchContent_Declare(
     GIT_TAG 9.0.0)
 FetchContent_MakeAvailable(fmtlib)
 
-set(RE2_BUILD_TESTING off)
+option(RE2_BUILD_TESTING off)
 FetchContent_Declare(
     re2
     GIT_REPOSITORY https://github.com/google/re2.git
