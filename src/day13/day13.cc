@@ -6,10 +6,11 @@
 
 #include <fmt/core.h>
 
-#include <string>
-#include <vector>
+#include <algorithm>
 #include <cassert>
 #include <optional>
+#include <string>
+#include <vector>
 
 struct List {
     bool IsInteger;
@@ -125,27 +126,54 @@ std::optional<bool> CompareLists(List* left, List* right)
     return false;
 }
 
+bool Compare(List* left, List* right)
+{
+    auto val = CompareLists(left, right);
+    assert(val.has_value());
+    return *val;
+}
+
 int main()
 {
     std::vector<std::string> input = ReadFile(DAY_13_INPUT);
     // for (const std::string& line : input) fmt::print("{}\n", line);
 
-    unsigned int res = 0;
-    for (int i = 0; i < input.size(); i += 3) {
-        // fmt::print("l: {}\n", input[i]);
-        // fmt::print("r: {}\n", input[i + 1]);
-        List* l_list = CreateList(input[i]);
-        List* r_list = CreateList(input[i + 1]);
+    // unsigned int res = 0;
+    // for (int i = 0; i < input.size(); i += 3) {
+    //     // fmt::print("l: {}\n", input[i]);
+    //     // fmt::print("r: {}\n", input[i + 1]);
+    //     List* l_list = CreateList(input[i]);
+    //     List* r_list = CreateList(input[i + 1]);
 
-        auto value = CompareLists(l_list, r_list);
-        assert(value.has_value());
-        fmt::print("pair {}: {}\n", (i / 3) + 1, *value);
-        if (*value) res += (i / 3) + 1;
-        // fmt::print("compare: {}\n", *CompareLists(l_list, r_list));
+    //     auto value = CompareLists(l_list, r_list);
+    //     assert(value.has_value());
+    //     fmt::print("pair {}: {}\n", (i / 3) + 1, *value);
+    //     if (*value) res += (i / 3) + 1;
+    //     // fmt::print("compare: {}\n", *CompareLists(l_list, r_list));
 
-        delete l_list;
-        delete r_list;
+    //     delete l_list;
+    //     delete r_list;
+    // }
+    // fmt::print("res: {}\n", res);
+
+    std::vector<List*> packets;
+    for (const std::string& line : input) {
+        packets.push_back(CreateList(line));
     }
-    fmt::print("res: {}\n", res);
+    List* pack_2 = packets[packets.size() - 2];
+    List* pack_6 = packets[packets.size() - 1];
+
+    std::sort(packets.begin(), packets.end(), &Compare);
+
+    const auto it_2 = std::find(packets.begin(), packets.end(), pack_2);
+    const auto it_6 = std::find(packets.begin(), packets.end(), pack_6);
+
+    const unsigned int index_2 = it_2 - packets.begin() + 1;
+    const unsigned int index_6 = it_6 - packets.begin() + 1;
+    fmt::print("res: {}\n", index_6 * index_2);
+
+    for (const auto& p : packets) {
+        delete p;
+    }
     return 0;
 }
